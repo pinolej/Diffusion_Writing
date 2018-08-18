@@ -1,0 +1,155 @@
+\documentclass[12pt]{article}
+\usepackage{comment}
+\usepackage{enumitem}
+\usepackage{makeidx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx,wrapfig}
+\usepackage{amsmath}
+\usepackage{blkarray}
+\usepackage{geometry}
+\usepackage{color}
+\usepackage{fancyref}
+\usepackage{ulem}
+\usepackage{framed}
+\usepackage{xr}
+\usepackage{grffile}
+%\usepackage{fancyvrb}
+%\usepackage{alltt}
+\usepackage{setspace} 
+\usepackage{bm}
+%\usepackage{amsthm}
+
+
+
+%\usepackage{xr-hyper}
+%\usepackage{hyperref}
+%\externaldocument{fig_matching}
+%\externaldocument{Finding1_V2}
+%\usepackage[normalem]{ulem}
+\newcommand{\stkout}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+%\usepackage[toc,page]{appendix}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}  
+
+\usepackage[english]{babel}
+\usepackage[dvipsnames]{xcolor}
+\graphicspath{{materia prima/}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+
+\geometry{margin=0.9in}
+\setlength{\parindent}{0.8cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{center}
+\textbf{Interpretation of eigenvalues manipulation in terms of network structure}
+\end{center}
+
+\tableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Brouillon - For me
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Brouillon - for me}
+
+\subsection{Goal}
+I want to understand what happens to:
+\begin{itemize}[noitemsep,topsep=0pt]
+  \item network structure
+  \item diffusion on this new network structure with respect to the previous one
+ \end{itemize}
+
+when we set some eigenvalues to zero.
+\subsection{Plan to do}
+\begin{itemize}[noitemsep,topsep=0pt]
+\item Write my goal
+\item Study literature
+\item What can I get from Galeotti - Golub?
+\end{itemize}
+\subsection{Thoughts}
+{ \scriptsize { \color{Orchid} What am I trying to do? I want to understand what changing the eigenvalues of the "adjacency-matrix" means in terms of what happens to the network. I "cancel some dimensions". What does it mean?
+
+So we will see how the structure in terms of GROUPS, or COMMUNITY of the network changes (we cancel some of the partitions... but not all...)
+
+Do the eigenvectors of the remaining non zero eigenvalues change? If yes, what does it mean?
+
+So we diminish the "dimension of structures in a network". Why would it help stopping epidemics? Because epidemics diffuse through ... cohesive groups? Or many links between groups? Again, the between versus within group story. Can this method enlight me on the between/ within structure? Does the between structure changes when the within structure does and vice versa? That is a key point!!! 
+
+Because that is what I understand from this community detection on various dimensions. What does the "\textit{various dimensions of community structure}" mean?   \par } }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%LORENZO LATENT MODEL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Lore's latent meeting model}
+
+\cite{308_Gal_Rogers}
+
+\bibliography{lib20180508}{}
+\bibliographystyle{plain}
+
+%\[ \frac{d}{dx}\Bigr|_{\substack{x=1\\y=2}} \]
+
+%\begin{figure}[htpb]
+%\makebox[\textwidth]{\includegraphics[scale=0.35]{"GuiltyUnbalanced"}}
+%\makebox[\textwidth]{\includegraphics[scale=0.85]{"materia prima/figures/W1_drho_theta"}}
+%\label{fig:SortingConstraints}
+%\caption{Utility of Guilty players, Unbalanced $x_0,x_1$}
+%\end{figure}
+
+%Some text
+%\begin{itemize}[noitemsep,topsep=0pt]
+%  \setlength\itemsep{0.01em}
+%  \item Item 1
+% \end{itemize}
+
+%\begin{enumerate}[noitemsep,topsep=0pt]
+%\item
+%	\begin{itemize}[noitemsep,topsep=0pt]
+%	\item 
+%	\end{itemize}
+%\end{enumerate}
+
+\end{document}

@@ -1,0 +1,767 @@
+\documentclass[12pt]{article}
+\usepackage{comment}
+\usepackage{enumitem}
+\usepackage{makeidx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx,wrapfig}
+\usepackage{amsmath}
+\usepackage{blkarray}
+\usepackage{geometry}
+\usepackage{color}
+\usepackage{fancyref}
+\usepackage{ulem}
+\usepackage{framed}
+\usepackage{xr}
+\usepackage{grffile}
+%\usepackage{fancyvrb}
+%\usepackage{alltt}
+\usepackage{setspace} 
+\usepackage{bm}
+\usepackage{amsthm}
+
+
+
+%\usepackage{xr-hyper}
+\usepackage{hyperref}
+%\externaldocument{fig_matching}
+%\externaldocument{Finding1_V2}
+%\usepackage[normalem]{ulem}
+\newcommand{\stkout}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+%\usepackage[toc,page]{appendix}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}  
+
+\usepackage[english]{babel}
+\usepackage[dvipsnames]{xcolor}
+\graphicspath{{materia prima/}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+
+\geometry{margin=0.9in}
+\setlength{\parindent}{0.8cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{center}
+\textbf{Optimal Immunization of a networked population}
+\end{center}
+
+\tableofcontents
+\cite{308_Gal_Rogers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Model}
+
+\subsection{The network}
+
+$g$ groups. For $i,j=1, \dots, g$:
+
+\begin{tabular}{ll}
+$z_i$ & number of friends for type $i$ \\
+$r_{ij}$ & proportion of $i$ types' friends that are from group $j$ \\
+$\lambda_{ij}$ & probability that a $i$ type is infected by an infected $j$ type friend \\
+\end{tabular}
+
+
+
+\subsection{Transmission}
+
+Probability that a friend infects me, if I am a group $i$ member:
+
+\[ g_i(\bm{\theta}) = z_i \Big[\sum_{j} r_{ij} \lambda_{ij} \theta_j  \Big] \]
+
+
+
+Let $A \in \mathcal{M}_{gg}$ with 
+
+\[\big(  a_{ij} \big) = z_i r_{ij} \lambda{ij} \]
+
+Then
+
+\[ g(\bm{\theta}) \equiv \begin{bmatrix} g_1(\bm{\theta}) \\ \vdots \\ g_g(\bm{\theta})  \end{bmatrix} = A \bm{\theta} \]
+
+
+
+\subsection{Steady state equation}
+
+\paragraph{Law of Motion}
+\[
+\dot{\theta}_i = - \delta \theta_i + [1-\theta_i] \   g_i(\bm{\theta})
+\]
+
+\paragraph{Steady State}
+
+\[
+ - \delta \theta_i + [1-\theta_i] \   g_i(\bm{\theta}) = 0
+\]
+
+\paragraph{In matrix form}
+
+\[ -\delta \bm{\theta} + \begin{bmatrix} 1- \theta_1 & & 0 \\  & \ddots & \\ 0 & & 1-\theta_g \end{bmatrix} A \bm{\theta} = 0
+\label{eq:syst}
+\tag{$\mathcal{S}$}
+ \]
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Simpler case}
+
+\subsection{The matrix $A$}
+
+In the case $\lambda_{ij}=\lambda$ for all $i,j$ and $g=2$ (two groups), it simplifies to:
+
+\[ g_i(\bm{\theta}) = z_i \lambda \Big[ r_{ii} \theta_i + r_{i\ -i} \theta_{-i}  \Big] \] 
+
+and 
+
+\[ A = \lambda \begin{bmatrix} z_1 r_{11} & z_1 r_{12} \\ z_2 r_{21} & z_2 r_{22}  \end{bmatrix} \]
+
+\subparagraph{Consistency conditions yield}:
+
+$r_{12} = 1-r_{11}$ and $r_{21}=1-r_{22}$, and also 
+
+\begin{equation*}
+r_{12} p_1 n_1 = r_{21} p_2 n_2
+\end{equation*}
+
+with $n_1 = n_2 = \frac{n}{2}$ it reduces to:
+
+\[ r_{12} \frac{z_1}{n-1} = r_{21} \frac{z_2}{n-1} \]
+
+
+\begin{theorem}
+$A$ is symmetric 
+
+if \stkout{and only if}
+
+$n_1 = n_2$
+\end{theorem}
+
+\subsection{SS equations}
+
+\[ \begin{split}
+-\delta \theta_1 + (1-\theta_1) [b_{11} \theta_1 + b_{12} \theta_2 ] &  = 0 \\
+-\delta \theta_2 + (1-\theta_2) [b_{21} \theta_1 + b_{22} \theta_2 ] & = 0 
+\end{split} \]
+
+\paragraph{In matrix form}
+
+\begin{equation}
+ -\delta \bm{\theta} + \begin{bmatrix} 1- \theta_1 & 0 \\ 0 & 1-\theta_2 \end{bmatrix} A \bm{\theta} = 0 
+\label{eq:SSSimple}
+\tag{$\mathcal{S}$ 2b2}
+\end{equation}
+
+\section{(N \& S) Conditions for a unique solution of \eqref{eq:syst}}
+
+\begin{theorem} Number of solutions of \eqref{eq:syst}
+ \begin{center}
+\begin{tabular}{c}
+\eqref{eq:SSSimple} has a unique solution \\
+if and only if \\
+$-\delta I + A$ is negative definite \end{tabular} \end{center}
+\end{theorem}
+
+\subsection{Proof - First Direction - Neg SEMI def $\Rightarrow$ \eqref{eq:syst} has a unique solution}
+
+(Informal writing). $\bm{\vec{0}}$ is always a solution of \eqref{eq:syst}. 
+
+[Not anymore: "\textit{Assume $\bm{\theta^{*}} \neq \bm{\vec{0}}$ is also solution of \eqref{eq:syst}.}"]
+
+Let:
+\[ D(\bm{\theta}) \equiv \begin{bmatrix} 1- \theta_1 & & 0 \\  & \ddots & \\ 0 & & 1-\theta_g \end{bmatrix} \]
+
+and let 
+
+\[J(\bm{\theta}) \equiv D(\bm{\theta}) A = \begin{bmatrix} 1- \theta_1 & & 0 \\  & \ddots & \\ 0 & & 1-\theta_g \end{bmatrix}  A \]
+
+\begin{framed}
+The steps of the proof are the following:
+
+\[ \begin{array}{c}
+-\delta I + A \text{ is negative definite} \\
+\Downarrow \\
+-\delta I + D(\bm{\theta}) A \text{ is negative definite} , \forall \bm{\theta} \\ 
+\Downarrow \\
+\det \left[-\delta I + D(\bm{\theta}) A \right] \neq 0  , \forall \bm{\theta} \\
+\Downarrow \\
+\left[-\delta I + D(\bm{\theta}) A \right] \bm{\theta} = 0 \text{ has a unique solution} 
+\end{array} \]
+\end{framed}
+
+We quote here the theorem of Ostrowski, with $A$ symmetric, $D$ diagonal, eigenvalues sorted in increasing order:
+
+\[ \lambda_k(J) = \lambda_k \Big( D^{\frac{1}{2}} A  D^{\frac{1}{2}} \Big) = \theta_k \lambda_k(A) \qquad \text{ with } \theta_k \in \left[ \min_i d_{ii}, \max_i d_{ii} \right] \] (theta means sth else, I retook here the notations I found online)
+
+Now, as in our case, $d_{ii} \in [0,1] \forall i$. But what about the eigenvalues of $A$? Do I know whether they are all positive? For sure they cannot be too large. The trace is $0$ (well depending on the convention you take, but which one did we take $+$ how can our results depend on the convention we take for the diagonal elements of $A$?). The theorem of Ostrowski thus yields:
+
+\[ \left\{ \begin{array}{cccr}
+\min_i (d_{ii}) \lambda_k(A) & \leq \lambda_k(J) \leq & \max_i (d_{ii}) \lambda_k(A) & \text{ if } \lambda_k(A)>0 \\
+- \max_i (d_{ii}) \lambda_k(A) & \leq \lambda_k(J) \leq & - \min_i (d_{ii}) \lambda_k(A) & \text{ if } \lambda_k(A)<0 \\ 
+\end{array} \right. \]
+
+Can I prove that $\forall k, -\delta + \lambda_k(J) <0$? (and thus that $-\delta I + J(\bm{\theta})$ is negative definite $\forall \bm{\theta}$?) YES. In both case it is given by the previous inequalities.
+
+Then the determinant is $<0$ cqfd...
+
+
+
+
+
+%\[ \det \left( -\delta I + \begin{bmatrix} 1- \theta_1^* & & 0 \\  & \ddots & \\ 0 & & 1-\theta_g^* \end{bmatrix} A   \right) = 0 \]
+
+
+\subsection{Second Direction}
+\subsubsection{A point on how to apply Brouwer FPT}
+
+Let 
+
+\[ \begin{array}{lccc}
+ f : & \mathbb{R}^n & \rightarrow & \mathbb{R}^n \\
+ & x & \mapsto & f(x) \end{array} \]
+
+and
+
+\[ \begin{array}{lccc}
+h : & \mathbb{R}^n & \rightarrow & \mathbb{R}^n \\
+ & x & \mapsto & \begin{pmatrix} h_1(x) & = & f_1(x)-p_1(x) \\
+\vdots \\
+h_n(x) & = & f_n(x)-p_n(x) \end{pmatrix}
+ \end{array} \]
+
+where $p_i(.)$ is the projection matrix, that is, $\forall i, \ p_i(x)=x_i \in \mathbb{R}$
+
+\bigskip
+
+\begin{assumption}{Partial Derivatives at zero} $\forall i,j$:
+\[  \frac{\partial f_i}{\partial x_j}(\bm{0}) >1  \]
+    \label{def:partial_at_zero}
+\end{assumption}
+
+We \textbf{WTS}:
+
+\begin{theorem}
+\[ \text{Assumption } \ref{def:partial_at_zero} \Rightarrow \exists \varepsilon \in \mathbb{R}^n, \varepsilon >0, \  s.t. \ \tilde{f}: [\varepsilon ,1] \rightarrow [\varepsilon ,1] \]
+with $\tilde{f}(x) = f(x)$ for $x \in [\varepsilon ,1]$
+\end{theorem}
+
+Once we have this, as $[\varepsilon ,1]$ is compact, non-empty, convex subset of $\mathbb{R}^n$, we can apply the \textbf{Brouwer Fixed Point Theorem} (and as $f(.)$ is continuous on this interval).
+
+\begin{proof}
+First Assumption  \ref{def:partial_at_zero} $\Rightarrow$ $\frac{\partial h_i}{\partial x_j}(\bm{0})>0$
+
+Then, as all the partial derivatives of $h(.)$ are continuous (all the entries of the Jacobian),  $\exists d \in \mathbb{R}, d>0$ such that for all $x \in B(0,d)$ (open ball of center $0$ and radius $d$), $\frac{\partial h_i}{\partial x_j}(x)>0$. 
+
+Let $\varepsilon \in B(0,d), \ \varepsilon >0$ (on all dimensions, check notations). It yields, $\forall i,j$:
+
+\[ \frac{\partial h_i}{\partial x_j}(\varepsilon) >0 \]
+
+Then, note that, for $k \in \mathbb{R}, k>0$:
+
+\[ \frac{\partial h_i}{\partial x_j}(x) >0 \Rightarrow h_i \left( \begin{array}{c} x_1 \\ \vdots \\ x_j + k \\ \vdots \\ x_n \end{array} \right) > h_i \left( \begin{array}{c} x_1 \\ \vdots \\ x_j \\ \vdots \\ x_n \end{array} \right)  \]
+
+%\[ \frac{\partial h_i}{\partial x_j}(\varepsilon) >0 \Rightarrow h_i \left( \begin{array}{c} 0 \\ \vdots \\ 0 \\ x_j + k \\ 0 \\ \vdots \\ 0 \end{array} \right) > h_i \left( \begin{array}{c} 0 \\ \vdots \\ 0 \\ x_j  \\ 0 \\ \vdots \\ 0 \end{array} \right)  \]
+
+or again, with $\tilde{x}^j = \left( \begin{array}{c} x_1 \\ \vdots \\ x_j + k \\ \vdots \\ x_n \end{array} \right) $:
+
+\[  f_i \left( \begin{array}{c} x_1 \\ \vdots \\ x_j + k \\ \vdots \\ x_n \end{array} \right) + \tilde{x}^j_i>f_i \left( \begin{array}{c} x_1 \\ \vdots \\ x_j \\ \vdots \\ x_n \end{array} \right) + x_i  \]
+
+bla bla bla it should yield:
+
+\[ \exists \ \varepsilon >0 \ s.t. \ f_i(\varepsilon) > \epsilon_i, \forall i \] 
+(which is what we want right? Then there are two cases, for the right born of the FPT interval, may not be always $1$, may be something smaller than $1$, but then the fixed point is in it so not the problem)
+
+\end{proof}
+
+\subsubsection{Differentiation of our function}
+
+Our function is:
+
+\[ \begin{array}{lccc}
+ f : & \mathbb{R}^n & \rightarrow & \mathbb{R}^n \\
+ & \bm{\theta} & \mapsto & D(\bm{\theta}) A \bm{\theta} \end{array} \]
+
+Let:
+\[ D(\bm{\theta}) \equiv \begin{bmatrix} 1- \theta_1 & & 0 \\  & \ddots & \\ 0 & & 1-\theta_g \end{bmatrix} \]
+
+note that it can be written using the canonical basis of $\mathcal{M}_{n \times 1}$ and  $\mathcal{M}_{n \times n}$ :
+
+\[D(\bm{\theta})=\sum_{i=1}^{n} e^i \big[1-\bm{\theta} \big]^T e_i^i \]
+
+Our function becomes
+
+\[ \begin{array}{lccc}
+ f : & \mathbb{R}^n & \rightarrow & \mathbb{R}^n \\
+ & \bm{\theta} & \mapsto & \sum_{i=1}^{n} e^i \big[1-\bm{\theta} \big]^T e_i^i A \bm{\theta} \end{array} \]
+
+We can thus split it in the following way:
+
+\[ f(\theta)= \sum_{i=1}^{n} e^i \bm{1}_{1 \times n} e_i^i A \bm{\theta} - \sum_{i=1}^{n} e^i \bm{\theta} ^T e_i^i A \bm{\theta} =  
+\sum_{i=1}^{n} e^i \left(  \bm{1}_{1 \times n} e_i^i A \bm{\theta} - \bm{\theta} ^T e_i^i A \bm{\theta} \right) \]
+
+DIMENSIONS:
+
+$\bm{1}_{1 \times n} e_i^i A \bm{\theta}$ is $1 \times 1$; $\bm{\theta} ^T e_i^i A \bm{\theta}$ is $1 \times 1$
+
+\[
+ f_l(\theta) = \left[ e^l\right]^T \sum_{i=1}^{n} e^i  \left(  \bm{1}_{1 \times n} e_i^i A \bm{\theta} - \bm{\theta} ^T e_i^i A \bm{\theta} \right)  \] 
+
+Remember the formula:
+
+\[ \ddfrac{\partial (Bx+b)^T C (Dx+d)}{\partial x} = B^T C (Dx+d) + D^T C^T (Bx+b) \] 
+
+with $B=I, \ C=e^i_i, \  D=A, \ x=\theta, \ d=0, \ b=0$
+
+Differentiating part of the second term we get:
+
+\[ \ddfrac{\partial}{\partial \theta} \bm{\theta} ^T e_i^i A \bm{\theta} = e^i_i (A \theta) + A^T (e_i^i)^T \theta \]
+
+
+For the first term, we just have (check if also valid for matrix $\times$ vector): $\frac{\partial  x^T a}{\partial x} = \frac{\partial a^T x }{\partial x} = a$ so the derivative of the first term yields:
+
+\[ \ddfrac{\partial}{\partial \theta} \bm{1}_{1 \times n} e_i^i A \bm{\theta}=  \Big[ \bm{1}_{1 \times n} e_i^i A \Big]^T = A^T \left[ e_i^i \right]^T \bm{1}_{n \times 1}  \]
+
+Altogether we get:
+
+ \[ \ddfrac{\partial f_l}{\partial \theta} (\theta) = \sum_i \Big(\left[ e^l \right]^T e^i \Big) \Bigg( A^T \left[ e_i^i \right]^T \bm{1}_{n \times 1}   -  e^i_i (A \theta) - A^T (e_i^i)^T \theta \Bigg) \]
+
+As 
+
+\[ \Big(\left[ e^l \right]^T e^i \Big) = \left\{ \begin{array}{ll} 1 & \text{ if } i=j \\ 0 & \text{ otherwise } \end{array} \right. \]
+
+It simplifies to (we get a $(n \times 1)$ column vector, each entry corresponding to the derivative wrt a different element of $\bm{\theta}$)
+
+ \[ \ddfrac{\partial f_l}{\partial \theta} (\theta) =
+ A^T \left[ e_l^l \right]^T \bm{1}_{n \times 1}   -  e^l_l (A \theta) - A^T (e_l^l)^T \theta  \]
+
+\subparagraph{Valued at zero}
+
+ \[ \ddfrac{\partial f_l}{\partial \theta} (\bm{0}) = A^T \left[ e_l^l \right]^T \bm{1}_{n \times 1}  = C^l\left(A^T \right) = R^l(A) \]
+
+that is, the $l$-th Row of $A$. Therefore:
+
+ \[ \ddfrac{\partial f_i}{\partial \theta_j} (\bm{0}) =a_{ij} \]
+
+\subsubsection{The Proof - Try}
+\begin{framed}
+The steps of the proof are the following:
+
+\[ \begin{array}{c}
+\text{NOT } \Big\{ -\delta I + A \text{ is  negative definite} \Big\} \\
+\Downarrow \\
+\left[-\delta I + D(\bm{\theta}) A \right] \bm{\theta} = 0 \text{ has a non zero solution} \\
+\Downarrow \\
+\text{NOT } \Big\{ \left[-\delta I + D(\bm{\theta}) A \right] \bm{\theta} = 0 \text{ has a unique solution} \Big\}
+\end{array} \]
+\end{framed}
+
+$\text{NOT } \Big\{ -\delta I + A \text{ is  negative definite} \Big\}$ yields:
+
+\[ \exists \ v \neq 0, \ v \in \mathbb{R}^n, \ s.t. \ v^T [-\delta I + A ] v >0 \] (check if strict or weak inequality)
+
+Using a $v$ normalized to $1$:
+
+\begin{equation} \exists \ v \neq 0, \ v \in \mathbb{R}^n, ||v||=1, \ s.t. \ \sum_{i=1}^n \sum_{j=1}^{n} v_i a_{ij} v_j > \delta 
+\label{eq:ndf}
+\end{equation}
+
+Note that:
+
+\[ \sum_{i=1}^n \sum_{j=1}^{n} v_i a_{ij} v_j =  \sum_{i=1}^n \sum_{j=1}^{n} v_i \ddfrac{\partial f_i}{\partial \theta_j} (\bm{0}) v_j \] 
+
+\paragraph{Directional Derivatives}
+
+The directional derivative of $f_j(.)$ at $x=\bm{0}$ in the direction of $v$ is:
+
+\[ f_i'(0,v) = \sum_{j=1}^n \ddfrac{\partial f_i}{\partial x_j}(\bm{0}) v_j \]
+
+The definition of this directional derivative is:
+
+\[  f_j'(0,v) = \lim_{h \rightarrow 0} \ddfrac{f_j(\bm{0} + h v)-f_j(\bm{0})}{h} \]
+
+So following up on \eqref{eq:ndf}:
+
+\begin{equation} \exists \ v \neq 0, \ v \in \mathbb{R}^n, ||v||=1, \ s.t. \ \sum_{i=1}^n v_i f_i'(0,v) > \delta 
+\label{eq:ndf2}
+\end{equation}
+
+\paragraph{In $\mathbb{R}^2$}
+
+For $h \in \mathbb{R}$ small enough:
+
+\[ v_1 \big[ f_1(hv)-f_1(0) \big] + v_2 \big[ f_2(hv)-f_2(0) \big] > \delta \]
+
+BY continuity bla bla bla, $\exists \ \varepsilon >0 \in \mathbb{R}^2$ s.t.
+
+\[ v_1 \big[ f_1(\varepsilon+hv)-f_1(\varepsilon) \big] + v_2 \big[ f_2(\varepsilon + hv)-f_2(\varepsilon) \big] > \delta \]
+
+In terms of derivatives:
+
+\[ v_1 \big[ f_1'(0,v)  \big] + v_2 \big[ f_2'(0,v) \big] > \delta \]
+
+and also by continuity, for $h$ small enough
+
+\[ v_1 \big[ f_1'(hv,v)  \big] + v_2 \big[ f_2'(hv,v) \big] > \delta \]
+
+I also have (I think)
+
+\[ v_1 f_1\big(v_1 h, v_2 h \big) +  v_2 f_2\big(v_1 h, v_2 h \big) > \delta \] 
+
+\subparagraph{I want to redistribute}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Optimal immunization}
+
+We use the theorem 2.1 of \cite{highamtheorem} to find the nearest symmetric negative semidefinite matrix, and to see how to perform this manipulation.
+
+\subsection{Initial theorem}
+
+Let $A \in \mathbb{R}^{n \times n}$, and let $B = (A + A^T)/2$.
+
+Let $B=UH$ be a polar decomposition $(U^T U = I, \ H = H^T \geq 0)$. Then $X_F = (B+H)/2$ is the unique positive approximant of $A$ in the Frobenius norm, and 
+
+\[ \delta_F(A)^2 = \sum_{\mu_i(B)<0} \mu_i(B)^2 + ||C||_F^2 \]
+
+How to find our object of interest $X_F$? "The preferred approach is to compute a spectral decomposition of $B$ and to form $X_F$ according to (2.1) and (2.2).
+
+An alternative, when $B$ is nonsingular, is to compute $H$ using the iterative algorithm of [13], which is based on matrix inversions.
+
+
+
+\[ d_i = \left\{ \begin{array}{ll} 
+\mu_i, & \mu_i \geq 0 \\
+0, & \mu_i<0 \end{array} \right.
+\tag{2.1} \]
+
+that is
+
+\[ X_F = Z diag(d_i) Z^T \tag{2.2} \]
+
+where $Z$ is the .... "matrix of eigenvectors in the diagonalization of $B$?
+
+\[ B = Z \Lambda Z^T \]
+
+and $\Lambda=diag(\mu_i)$.
+
+\subsection{Adaptation to our problem}
+
+This theorem allows us to:
+\begin{itemize}[noitemsep,topsep=0pt]
+  \item Know what is the nearest negative definite matrix of $A$ if we want to compute it (with a computer)
+  \item (not anymore: Find a way to compute it, analyze the steps of the intervention on $A$, that is, on the structure of the network)
+\item give some intuition on what it makes to the network
+ \end{itemize}
+
+Note: nearest in the \textbf{Frobenius norm}: is it a problem?
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Interpretation of eigenvalues manipulation in terms of network structure}
+
+{ \scriptsize { \color{Orchid} What am I trying to do? I want to understand what changing the eigenvalues of the "adjacency-matrix" means in terms of what happens to the network. I "cancel some dimensions". What does it mean?
+
+So we will see how the structure in terms of GROUPS, or COMMUNITY of the network changes (we cancel some of the partitions... but not all...)
+
+Do the eigenvectors of the remaining non zero eigenvalues change? If yes, what does it mean?
+
+So we diminish the "dimension of structures in a network". Why would it help stopping epidemics? Because epidemics diffuse through ... cohesive groups? Or many links between groups? Again, the between versus within group story. Can this method enlight me on the between/ within structure? Does the between structure changes when the within structure does and vice versa? That is a key point!!! 
+
+Because that is what I understand from this community detection on various dimensions. What does the "\textit{various dimensions of community structure}" mean?   \par } }
+
+\section{To present what we are doing}
+\newpage
+%To present what we are doing:
+
+Let $A \in \mathcal{M}_{gg}$ with 
+
+\[\big(  a_{ij} \big) = z_i r_{ij} \lambda{ij} \]
+
+In the case $\lambda_{ij}=\lambda$ for all $i,j$ and $g=2$ (two groups), it simplifies to:
+
+\[ A = \lambda \begin{bmatrix} z_1 r_{11} & z_1 r_{12} \\ z_2 r_{21} & z_2 r_{22}  \end{bmatrix} = \lambda
+ \begin{bmatrix} \text{ group-$1$ within-group friends } & \text{ group-$1$ between-group friends } \\
+\text{ group-$2$ between-group friends } & \text{ group-$1$ within-group friends }  \end{bmatrix}  \]
+
+\paragraph{Steady-State Equation}
+
+\[ -\delta \bm{\theta} + \begin{bmatrix} 1- \theta_1 & & 0 \\  & \ddots & \\ 0 & & 1-\theta_g \end{bmatrix} A \bm{\theta} = 0 
+\tag{$\mathcal{S}$}
+\]
+
+
+\begin{theorem} Number of solutions of \eqref{eq:SSSimple}
+ \begin{center}
+\begin{tabular}{c}
+\eqref{eq:SSSimple} has a unique solution \\
+if and only if \\
+$-\delta I + A$ is negative definite \end{tabular} \end{center}
+\end{theorem}
+
+
+We use the theorem 2.1 of Higham \cite{highamtheorem} to find the nearest symmetric negative semidefinite matrix, and to see how to perform this manipulation.
+
+\begin{theorem}
+Let $A \in \mathbb{R}^{n \times n}$ symmetric
+
+Let $A=UH$ be a polar decomposition $(U^T U = I, \ H = H^T \geq 0)$. Then $X_F = (A+H)/2$ is the unique positive approximant of $A$ in the Frobenius norm, 
+
+Spectral decomposition of $A$ (with eigenvalues ordered)
+
+\[ A = Z \Lambda Z^T \]
+
+Let us define:
+
+\[ d_i = \left\{ \begin{array}{ll} 
+\mu_i, & \mu_i \geq 0 \\
+0, & \mu_i<0 \end{array} \right.
+\tag{2.1} \]
+
+We can then express $X_F$ in the following way:
+\[ X_F = Z  \begin{bmatrix} d_1 & & 0 \\  & \ddots & \\ 0 & & d_n \end{bmatrix}  Z^T =  Z  \begin{bmatrix} \mu_1 & & 0 & & &  \\  & \ddots  & & & &  \\ 0 &  & \mu_k & & &  \\  &   & & 0 & &  \\ \ &   & & &\ddots &  \\  & & &&& 0 \end{bmatrix}  Z^T  \tag{2.2} \]
+
+\end{theorem}
+
+This gives us:
+\begin{itemize}[noitemsep,topsep=0pt]
+  \item Know what is the nearest negative definite matrix of $A$ if we want to compute it (with a computer), that is, the \textbf{cheapest intervention on the network} from a social planner point of view
+\item give some intuition on what it makes to the network
+ \end{itemize}
+
+\bigskip
+
+{ \footnotesize { \color{BlueViolet} We suppress edges instead of nodes
+
+\par }}
+
+{ \scriptsize { \color{BlueViolet} Then, using the literature on community detection in networks through eigenvectors/ eigenvalues (spectral clustering) to interpret the signification of "removing some eigenvalues" = "removing some layer of a multi-layer network? Immunization through: suppressing some dimension of contacts? Say, "school", "chess club"...
+
+Also: a measure of "how costly is a network structure to immunize". At same number of edges for instance, or same degree distribution, which networks cost less to the social planner to reach the zero-SS? 
+\par}}
+
+{ \scriptsize { \color{JungleGreen} If I immunize one person, supressing a node, I delete all the links of this person. If I act on links, and if each link destruction is "costly", then the intervention on all links is not necessarily the "cheapest one". Of course it depends on the interpretation, we cannot use the "immunization" interpretation anymore. Maybe promoting versus desincentivizing some types of meetings
+\par}}
+
+
+
+
+\begin{figure}[htpb]
+\makebox[\textwidth]{\includegraphics[scale=0.9]{"figLore/cov_mat"}}
+%\caption{Utility of Guilty players, Unbalanced $x_0,x_1$}
+\end{figure}
+\begin{figure}[htpb]
+\makebox[\textwidth]{\includegraphics[scale=0.9]{"figLore/explanation"}}
+%\label{fig:SortingConstraints}
+%\caption{Utility of Guilty players, Unbalanced $x_0,x_1$}
+\end{figure}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Appendix Old Stuff}
+
+\section{The Set-up} 
+
+\paragraph{Probabilities of links, 2 groups $r_i$-cohesive}
+
+Expected degree by group:
+\begin{equation*}
+\forall i=1,2: z_i=p_i(N-1)
+\end{equation*}
+
+Within-group Probability
+\begin{equation*}
+\frac{r_i z_i }{N_i -1}
+\end{equation*}
+
+Between-group Probability
+\begin{equation*}
+\frac{(1-r_1) z_1 }{N_2} \text{ and for group 2 }: \frac{(1-r_2) z_2 }{N_1}
+\end{equation*}
+
+\paragraph{CONSISTENCY CONDITION}
+(in MPS,2): E(number of total out-links from group 1) have to be $=$  E(number of total out-links from group 2):
+\begin{equation*}
+(1-r_1) p_1 n_1 = (1-r_2) p_2 n_2
+\end{equation*}
+
+
+
+\paragraph{Other Constraints on Parameters}
+
+I also need that the in-degree does not exceed the group size, and vice versa (Out-degree)
+
+Condition for $d_{11}$:
+\begin{equation*}
+r_1 \leq \frac{n_1-1}{(\alpha_n+1)n_1}\frac{1}{p_1}
+\end{equation*}
+
+Condition for $d_{12}$: (Out-Degree of Group 2 Members)
+\begin{equation*}
+r_1 \geq 1-\frac{\alpha_n n_1}{p_1 \big[n_1(1+\alpha_n)-1 \big]}
+\end{equation*}
+
+Condition for $d_{22}$:
+\begin{equation*}
+r_1 \leq \frac{\alpha_n n_1-1}{\alpha_r \alpha_p  p_1 n_1 (\alpha_n+1)}
+\end{equation*}
+
+Condition for $d_{21}$: (Out-Degree of Group 1 Members)
+\begin{equation*}
+r_1 \geq \frac{1}{\alpha_r}-\frac{n_1}{\alpha_r \alpha_p p_1 \big[ n_1(1+\alpha_n)-1 \big]}
+\end{equation*}
+
+\paragraph{Parameters} 
+
+\begin{equation*}
+\begin{array}{lllll}
+n_1 & + & \alpha_n & \text{ yields } & n_2 \\
+r_1 & + & \alpha_r & \text{ yields } & r_2 \\
+p_1 & + & \alpha_p & \text{ yields } & p_2 \\
+ \end{array}
+\end{equation*}
+
+\subsection{LOM}
+
+$ \forall d, i $
+\begin{equation}
+\dot{\rho}_i(d) = - \delta \rho_i(d) + [1-\rho_i(d)] \  \hat{g}_i\Big( \theta, \lambda, d \Big)
+\end{equation}
+
+Therefore at the SS:
+
+\begin{equation}
+\rho_i(d) = \frac{g_i\Big( \theta, \lambda, d \Big)}{1+g_i\Big( \theta, \lambda, d \Big) }
+\end{equation}
+ with $\lambda=(v^U, v^E, \delta)$ and $g(.)=\hat{g}(.) / \delta$
+
+\begin{equation}
+ \theta_i [\{\rho_d(t)\}_{d=0}^\infty] = \sum_{l=1}^{\infty} \rho_l(t) \xi_i(l), \  \forall i=1,2
+\end{equation}
+
+\paragraph{Transmission Function} (Exact Number of Employed Friends)
+
+\begin{equation}
+g_i(\theta, d)=  \sum_{a=0}^{d} \binom{d}{a} \theta_i^a (1-\theta_i)^{d-a} f_i(a)
+\end{equation}
+
+\begin{equation}
+f_i(a)= \frac{v_i^U}{\delta} +\frac{1-v_i^U}{\delta} \left[1-(1-q_i(\lambda))^a \right]   
+\end{equation}
+
+
+
+\begin{equation*}
+\begin{array}{rcl}
+q_i(\lambda) = & r_i & \sum_{d \geq 1}  \xi_i(d)  \lambda_i(d) \\
++ & (1-r_i) & \sum_{d \geq 1}  \xi_{-i}(d)  \lambda_{-i}(d)
+\end{array}
+\end{equation*}
+
+When $\lambda_i(d)=\lambda, \forall i, \forall d$, it becomes:
+\begin{equation*}
+q_i(\lambda)=\lambda, \forall i=1.2
+\end{equation*}
+
+\begin{equation*}
+\xi_i(d)=\frac{P_i(d)d}{m_i}
+\end{equation*}
+
+\begin{equation*} 
+\theta_i=\sum_{j=1,2} \hat{p}_{j,i} \sum_{d \geq 1} \xi_j(d)\rho_j(d), \ \ \forall i=1,2, 
+\end{equation*}
+
+
+
+$\hat{p}_{i,j}:$ Probability that a friend of a $j$-type is a $i$-type (CONDITIONAL on being friend, the friendship link has already formed)
+\begin{equation*} \hat{p}_{i,j}= \left\{ \begin{array}{ll}
+r_j & \text{ if }j=i \\
+1-r_j & \text{ if }j \neq i
+\end{array} \right.
+\end{equation*}
+
+NOT TO BE CONFUSED WITH: Probability that a $i$-type forms a link with a $j$-type
+\begin{equation*} 
+p=\begin{bmatrix} p_{11} & p_{12} \\ p_{21} & p_{22} \end{bmatrix} = 
+\begin{bmatrix} \frac{d_{11}}{n_1-1} & \frac{d_{12}}{n_1} \\ \frac{d_{21}}{n_2} & \frac{d_{22}}{n_2-1} \end{bmatrix}
+\end{equation*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Real Appendix}
+\paragraph{Useful internet links}
+
+\href{https://math.stackexchange.com/questions/2637102/bound-on-the-eigenvalues-of-product-of-a-diagonal-matrix-and-a-symmetric-matrix}{bound-on-the-eigenvalues-of-product-of-a-diagonal-matrix-and-a-symmetric-matrix}
+
+\href{https://math.stackexchange.com/questions/140604/norm-of-a-quadratic-form}{Norm of a quadratic form}
+
+\subsection{Eigenvector centrality}
+
+Let $A = (a_{i,j})$ be the adjacency matrix of a graph. The eigenvector centrality $x_{i}$ of node $i$ is given by: $$x_i = \frac{1}{\lambda} \sum_k a_{k,i} \, x_k$$ where $\lambda \neq 0$ is a constant. In matrix form we have: $$\lambda x = x A$$
+Hence the centrality vector $x$ is the left-hand eigenvector of the adjacency matrix $A$ associated with the eigenvalue $\lambda$. It is wise to choose $\lambda$ as the largest eigenvalue in absolute value of matrix $A$. By virtue of Perron-Frobenius theorem, this choice guarantees the following desirable property: if matrix $A$ is irreducible, or equivalently if the graph is (strongly) connected, then the eigenvector solution $x$ is both unique and positive.
+
+\bigskip
+
+The \textbf{power method} can be used to solve the eigenvector centrality problem. Let $m(v)$ denote the signed component of maximal magnitude of vector $v$. If there is more than one maximal component, let $m(v)$ be the first one. For instance, $m(-3,3,2) = -3$. Let $x^{(0)}$ be an arbitrary vector. For $k \geq 1$:
+
+repeatedly compute $x^{(k)} = x^{(k-1)} A$;
+normalize $x^{(k)} = x^{(k)} / m(x^{(k)})$;
+until the desired precision is achieved. It follows that $x^{(k)}$ converges to the dominant eigenvector of $A$ and $m(x^{(k)})$ converges to the dominant eigenvalue of $A$. If matrix $A$ is sparse, each vector-matrix product can be performed in linear time in the size of the graph.
+
+The method converges when the dominant (largest) and the sub-dominant (second largest) eigenvalues of $A$, respectively denoted by $\lambda_1$ and $\lambda_2$, are separated, that is they are different in absolute value, hence when $|\lambda_1| > |\lambda_2|$. The rate of convergence is the rate at which $(\lambda_2 / \lambda_1)^k$ goes to $0$. Hence, if the sub-dominant eigenvalue is small compared to the dominant one, then the method quickly converges.
+
+
+\bibliography{lib20180607}{}
+\bibliographystyle{plain}
+
+% { \scriptsize { \color{Orchid}    \par } }
+
+%\[ \frac{d}{dx}\Bigr|_{\substack{x=1\\y=2}} \]
+
+%\begin{figure}[htpb]
+%\makebox[\textwidth]{\includegraphics[scale=0.35]{"GuiltyUnbalanced"}}
+%\makebox[\textwidth]{\includegraphics[scale=0.85]{"materia prima/figures/W1_drho_theta"}}
+%\label{fig:SortingConstraints}
+%\caption{Utility of Guilty players, Unbalanced $x_0,x_1$}
+%\end{figure}
+
+%Some text
+%\begin{itemize}[noitemsep,topsep=0pt]
+%  \setlength\itemsep{0.01em}
+%  \item Item 1
+% \end{itemize}
+
+%\begin{enumerate}[noitemsep,topsep=0pt]
+%\item
+%	\begin{itemize}[noitemsep,topsep=0pt]
+%	\item 
+%	\end{itemize}
+%\end{enumerate}
+
+\end{document}
